@@ -23,3 +23,4 @@ Description: This program evaluates the operating characteristics (OCs) of a fut
    parameter values in order to use the function.
 License: CC0
 LazyData: TRUE
+RoxygenNote: 6.0.1

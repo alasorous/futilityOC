@@ -2,48 +2,48 @@ futilityOC <- function (txtype = "norm", pow.type = "PREDICTIVE", p.stop = 0.15,
 	                      benef = NA, ctr.r = 0.5, NB.k = 0.5, over.dp = 1.5, alpha = 0.1, power = 0.8, n = 0, mat = 1, sd = 1,
 	                      LRV = "", delta = "", ran.r = 1, pr.tv = 0.1, pr.lrv = 0.8, print=T) {
 
-  # Calculates the operating characteristics of futility rules
-  #
-  # Args:
-  #   txtype: The type of treatment (tx) effect "norm", HR","NB","PR","QP","RD", "RR". Default="norm"
-  #   pow.type: The type of power for futility rule "PREDICTIVE" or "CONDITIONAL" power. Default="PREDICTIVE"
-  #   p.stop: power boundary to stop for futility. Default = 0.15
-  #   ind: value 1, 2 or 3. 1 = power for statistical significance, 2 = power to meet Go criteria,
-  #                       3 = power to meet better than NoGo boundary. Default = 1
-  #   epts.r: Assumed correlation between the endpoints used at the futility analysis and the final. Default = 1
-  #   inF: information fraction at interim. Default = 0.5
-  #   H1: The treatment effect size assumed under the alternative hypothesis. Default = TV
-  #   TV: Target value for Go No Go decision. Default = H1
-  #   benef: A logical value. TRUE indicates a larger effect is beneficial. FALSE indicates a small effect is beneficial.
-  #        Default values depend on the type of treatment effect:
-  #              = TRUE for effect types of norm and RD
-  #              = FALSE for effect types of HR, NB, PR, QP and RR
-  #   ctr.r: Assumed event rate for the control arm, which is necessary to be specified for effect types
-  #        of NB, PR, QP, RD and RR. Default = 0.5
-  #   NB.k: The shape parameter of negative binomial distribution, which is necessary when effect
-  #       type is NB. Default = 0.5.
-  #   over.dp: The over-dispersion estimate for treatment effect type QP. Default = 1.5
-  #   alpha: Alpha value that is used for determining sample size n, if n is not specified. Default = 0.1 one-sided.
-  #   power: Statistical power that is used for determining sample size if n is not specified. Default = 0.8.
-  #   n: The sample size of the trial. When it is not specified (=0), its value is estimated. Note: n represents the number of
-  #      events when treatment effect is in HR with time-to-event endpoint and the default mat = 1 is not altered.
-  #   mat: Data maturity rate of time-to-event endpoint. Default = 1
-  #   sd: The standard deviation specified for endpoints following a normal distribution. Default = 1
-  #   LRV: The lower reference value specified for its use in Go/NoGo decision rules. Default = 2/3 * TV
-  #   delta: A vector of assumed/hypothesized treatment effects for which the operating characteristics
-  #        of futility analysis are to be evaluated. Default = a vector of 4 with values = (TV, LRV, TV/4, 0).
-  #   ran.r: The randomization ratio. Default = 1
-  #   pr.tv: Standard GNG rules. Probability that the treatment effect is equal to or greater than TV. Default = 0.1
-  #   pr.lrv: Standard GNG rules. Probability that the treatment effect is equal to or greater than LRV. Default = 0.8
-  #
-  # Returns:
-  #   Design.specifications
-  #   Go.NoGo.parameters
-  #   Prob.stop.under.Hypotheses
-  #   Futility.stopping.boundary
-  #   Conditional.power.at.stopping.boundary
-  #   Predictive.power.at.stopping.boundary
-  #   Critical.values.for.Go.NoGo.based.on.Interim.data
+  #' Calculates the operating characteristics of futility rules
+  #'
+  #' Args:
+  #'   txtype: The type of treatment (tx) effect "norm", HR","NB","PR","QP","RD", "RR". Default="norm"
+  #'   pow.type: The type of power for futility rule "PREDICTIVE" or "CONDITIONAL" power. Default="PREDICTIVE"
+  #'   p.stop: power boundary to stop for futility. Default = 0.15
+  #'   ind: value 1, 2 or 3. 1 = power for statistical significance, 2 = power to meet Go criteria,
+  #'                       3 = power to meet better than NoGo boundary. Default = 1
+  #'   epts.r: Assumed correlation between the endpoints used at the futility analysis and the final. Default = 1
+  #'   inF: information fraction at interim. Default = 0.5
+  #'   H1: The treatment effect size assumed under the alternative hypothesis. Default = TV
+  #'   TV: Target value for Go No Go decision. Default = H1
+  #'   benef: A logical value. TRUE indicates a larger effect is beneficial. FALSE indicates a small effect is beneficial.
+  #'        Default values depend on the type of treatment effect:
+  #'              = TRUE for effect types of norm and RD
+  #'              = FALSE for effect types of HR, NB, PR, QP and RR
+  #'   ctr.r: Assumed event rate for the control arm, which is necessary to be specified for effect types
+  #'        of NB, PR, QP, RD and RR. Default = 0.5
+  #'   NB.k: The shape parameter of negative binomial distribution, which is necessary when effect
+  #'       type is NB. Default = 0.5.
+  #'   over.dp: The over-dispersion estimate for treatment effect type QP. Default = 1.5
+  #'   alpha: Alpha value that is used for determining sample size n, if n is not specified. Default = 0.1 one-sided.
+  #'   power: Statistical power that is used for determining sample size if n is not specified. Default = 0.8.
+  #'   n: The sample size of the trial. When it is not specified (=0), its value is estimated. Note: n represents the number of
+  #'      events when treatment effect is in HR with time-to-event endpoint and the default mat = 1 is not altered.
+  #'   mat: Data maturity rate of time-to-event endpoint. Default = 1
+  #'   sd: The standard deviation specified for endpoints following a normal distribution. Default = 1
+  #'   LRV: The lower reference value specified for its use in Go/NoGo decision rules. Default = 2/3 * TV
+  #'   delta: A vector of assumed/hypothesized treatment effects for which the operating characteristics
+  #'        of futility analysis are to be evaluated. Default = a vector of 4 with values = (TV, LRV, TV/4, 0).
+  #'   ran.r: The randomization ratio. Default = 1
+  #'   pr.tv: Standard GNG rules. Probability that the treatment effect is equal to or greater than TV. Default = 0.1
+  #'   pr.lrv: Standard GNG rules. Probability that the treatment effect is equal to or greater than LRV. Default = 0.8
+  #'
+  #' Returns:
+  #'   Design.specifications
+  #'   Go.NoGo.parameters
+  #'   Prob.stop.under.Hypotheses
+  #'   Futility.stopping.boundary
+  #'   Conditional.power.at.stopping.boundary
+  #'   Predictive.power.at.stopping.boundary
+  #'   Critical.values.for.Go.NoGo.based.on.Interim.data
 
   L.pr <- qnorm(c(pr.tv,pr.lrv))
   z.a <- qnorm(1-alpha)
@@ -223,14 +223,14 @@ futilityOC <- function (txtype = "norm", pow.type = "PREDICTIVE", p.stop = 0.15,
 	Tab4 <- Tab2
 	Tab4[,2:5] <- Tab2[,2:5]-Tab1[,2:5]
 	if (print == T) {
-	  cat(paste("Design.specifications:\n   H1 =", H1, ", alpha =", alpha, ", power =", round(power, 3), ", n =", n, ", inF =", inF, 
+	  cat(paste("Design.specifications:\n   H1 =", H1, ", alpha =", alpha, ", power =", round(power, 3), ", n =", n, ", inF =", inF,
 		        "\nGo.NoGo.parameters:\n   TV =", TV, ", LRV =", round(LRV, 2), ", pr.tv =", pr.tv, ", pr.lrv =", pr.lrv,
        ##	Specified.Futility.Criterion=cbind(Pr.stop.H1),
 		        "\nProb.stop.under.Hypotheses:\n   H0 =", round(Pr.false.stop[1],3), ", TV =", round(Pr.false.stop[2],3), ", LRV =", round(Pr.false.stop[3],3),
             "\nFutility.stopping.boundary =", round(c.pw[1,1],3),
-		     #   "\nConditional.power.at.stopping.boundary:\n   Conditional Power =", round(c.pw[1,c(4)],3), ", Pr(Go|*) =", round(c.pw[1,c(3)],3), 
+		     #   "\nConditional.power.at.stopping.boundary:\n   Conditional Power =", round(c.pw[1,c(4)],3), ", Pr(Go|*) =", round(c.pw[1,c(3)],3),
          #              ", Pr(No Go|*) =", round(c.pw[1,c(2)],3),
-		        "\nPredictive.power.at.stopping.boundary:\n   Predictive Power =", round(p.pw[,c(3)],3), ", Pr(Go|*) =", round(p.pw[,c(2)],3), 
+		        "\nPredictive.power.at.stopping.boundary:\n   Predictive Power =", round(p.pw[,c(3)],3), ", Pr(Go|*) =", round(p.pw[,c(2)],3),
 		                  ", Pr(No Go|*) =", round(p.pw[,c(1)],3),
        ##	Prob.of.termination.at.FA=Tab3[,c(1,3,2)],
 		        "\nCritical.values.for.Go.NoGo.based.on.Interim.data=\n   Go.Pause =", round(gng.F[1,c(2)],4), ", Pause.NoGo =", round(gng.F[1,c(1)],4)	))
