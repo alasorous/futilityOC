@@ -4,52 +4,81 @@
 \alias{futilityOC}
 \title{Calculates the operating characteristics of futility rules}
 \usage{
-futilityOC(txtype = "norm", pow.type = "PREDICTIVE", p.stop = 0.15,
-  ind = 1, epts.r = 1, inF = 0.5, H1 = TV, TV = H1, benef = NA,
-  ctr.r = 0.5, NB.k = 0.5, over.dp = 1.5, alpha = 0.1, power = 0.8,
-  n = 0, mat = 1, sd = 1, LRV = "", delta = "", ran.r = 1,
-  pr.tv = 0.1, pr.lrv = 0.8, print = T)
+futilityOC(
+  txtype = "norm",
+  pow.type = "PREDICTIVE",
+  p.stop = 0.15,
+  ind = 1,
+  epts.r = 1,
+  inF = 0.5,
+  H1 = TV,
+  TV = H1,
+  benef = NA,
+  ctr.r = 0.5,
+  NB.k = 0.5,
+  over.dp = 1.5,
+  alpha = 0.1,
+  power = 0.8,
+  n = 0,
+  mat = 1,
+  sd = 1,
+  LRV = "",
+  delta = "",
+  ran.r = 1,
+  pr.tv = 0.1,
+  pr.lrv = 0.8,
+  print = T
+)
 }
 \description{
-Args:
-  txtype: The type of treatment (tx) effect "norm", HR","NB","PR","QP","RD", "RR". Default="norm"
-  pow.type: The type of power for futility rule "PREDICTIVE" or "CONDITIONAL" power. Default="PREDICTIVE"
-  p.stop: power boundary to stop for futility. Default = 0.15
-  ind: value 1, 2 or 3. 1 = power for statistical significance, 2 = power to meet Go criteria,
+@param txtype: The type of treatment (tx) effect "norm", HR","NB","PR","QP","RD", "RR". Default="norm"
+                 HR = hazard ratio; NB = Negative binomial; PR = Poisson regression
+                 QP = Quasi Poisson; RD = Risk difference; RR = risk ratio
+  @param pow.type: The type of power for futility rule "PREDICTIVE" or "CONDITIONAL" power. Default="PREDICTIVE"
+  @param p.stop: power boundary to stop for futility. Default = 0.15
+  @param ind: value 1, 2 or 3. 1 = power for statistical significance, 2 = power to meet Go criteria,
                       3 = power to meet better than NoGo boundary. Default = 1
-  epts.r: Assumed correlation between the endpoints used at the futility analysis and the final. Default = 1
-  inF: information fraction at interim. Default = 0.5
-  H1: The treatment effect size assumed under the alternative hypothesis. Default = TV
-  TV: Target value for Go No Go decision. Default = H1
-  benef: A logical value. TRUE indicates a larger effect is beneficial. FALSE indicates a small effect is beneficial.
+  @param epts.r: Assumed correlation between the endpoints used at the futility analysis and the final. Default = 1
+  @param inF: information fraction at interim. Default = 0.5
+  @param H1: The treatment effect size assumed under the alternative hypothesis. Default = TV
+  @param TV: Target value for Go No Go decision. Default = H1
+  @param benef: A logical value. TRUE indicates a larger effect is beneficial. FALSE indicates a small effect is beneficial.
        Default values depend on the type of treatment effect:
              = TRUE for effect types of norm and RD
              = FALSE for effect types of HR, NB, PR, QP and RR
-  ctr.r: Assumed event rate for the control arm, which is necessary to be specified for effect types
+  @param ctr.r: Assumed event rate for the control arm, which is necessary to be specified for effect types
        of NB, PR, QP, RD and RR. Default = 0.5
-  NB.k: The shape parameter of negative binomial distribution, which is necessary when effect
+  @param NB.k: The shape parameter of negative binomial distribution, which is necessary when effect
       type is NB. Default = 0.5.
-  over.dp: The over-dispersion estimate for treatment effect type QP. Default = 1.5
-  alpha: Alpha value that is used for determining sample size n, if n is not specified. Default = 0.1 one-sided.
-  power: Statistical power that is used for determining sample size if n is not specified. Default = 0.8.
-  n: The sample size of the trial. When it is not specified (=0), its value is estimated. Note: n represents the number of
+  @param over.dp: The over-dispersion estimate for treatment effect type QP. Default = 1.5
+  @param alpha: Alpha value that is used for determining sample size n, if n is not specified. Default = 0.1 one-sided.
+  @param power: Statistical power that is used for determining sample size if n is not specified. Default = 0.8.
+  @param n: The sample size of the trial. When it is not specified (=0), its value is estimated. Note: n represents the number of
      events when treatment effect is in HR with time-to-event endpoint and the default mat = 1 is not altered.
-  mat: Data maturity rate of time-to-event endpoint. Default = 1
-  sd: The standard deviation specified for endpoints following a normal distribution. Default = 1
-  LRV: The lower reference value specified for its use in Go/NoGo decision rules. Default = 2/3 * TV
-  delta: A vector of assumed/hypothesized treatment effects for which the operating characteristics
+  @param mat: Data maturity rate of time-to-event endpoint. Default = 1
+  @param sd: The standard deviation specified for endpoints following a normal distribution. Default = 1
+  @param LRV: The lower reference value specified for its use in Go/NoGo decision rules. Default = 2/3 * TV
+  @param delta: A vector of assumed/hypothesized treatment effects for which the operating characteristics
        of futility analysis are to be evaluated. Default = a vector of 4 with values = (TV, LRV, TV/4, 0).
-  ran.r: The randomization ratio. Default = 1
-  pr.tv: Standard GNG rules. Probability that the treatment effect is equal to or greater than TV. Default = 0.1
-  pr.lrv: Standard GNG rules. Probability that the treatment effect is equal to or greater than LRV. Default = 0.8
+  @param ran.r: The randomization ratio. Default = 1
+  @param pr.tv: Standard GNG rules. Probability that the treatment effect is equal to or greater than TV. Default = 0.1
+  @param pr.lrv: Standard GNG rules. Probability that the treatment effect is equal to or greater than LRV. Default = 0.8
 }
 \details{
-Returns:
-  Design.specifications
+@return Design.specifications
   Go.NoGo.parameters
   Prob.stop.under.Hypotheses
   Futility.stopping.boundary
   Conditional.power.at.stopping.boundary
   Predictive.power.at.stopping.boundary
   Critical.values.for.Go.NoGo.based.on.Interim.data
+
+  @example futilityOC(txtype = "RD", pow.type = "PREDICTIVE", p.stop = 0.2,
+  ind = 1, # probability of significance
+  inF = 0.5,
+  TV = 0.2, # target difference
+  benef = T,  # increase is benefit
+  ctr.r = 0.12,
+  alpha = 0.025,
+  n = 72)
 }

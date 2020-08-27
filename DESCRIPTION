@@ -8,7 +8,7 @@ URL: http://github.com/alasorous/futilityOC
 BugReports: http://github.com/alasorous/futilityOC/issues
 Date: 2015-07-17
 Author: Jay Zhang
-Maintainer: Alex Godwood <godwooda@medimmune.com>
+Maintainer: Alex Godwood <alex.godwood@soseiheptares.com>
 Description: This program evaluates the operating characteristics (OCs) of a futility analysis in clinical trials
    in the setting of model-based drug development (MBDD) following the rules proposed by Lalonde (2007).
    With hypothesized treatment effects, the OCs are evaluated as the chance of a trial being terminated earlier
@@ -23,4 +23,4 @@ Description: This program evaluates the operating characteristics (OCs) of a fut
    parameter values in order to use the function.
 License: CC0
 LazyData: TRUE
-RoxygenNote: 6.0.1
+RoxygenNote: 7.1.0
