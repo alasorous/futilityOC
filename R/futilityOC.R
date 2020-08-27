@@ -20,9 +20,9 @@
 #' @param NB.k The shape parameter of negative binomial distribution, which is necessary when effect
 #'       type is NB. Default = 0.5.
 #' @param over.dp The over-dispersion estimate for treatment effect type QP. Default = 1.5
-#' @param alpha Alpha value that is used for determining sample size n, if n is not specified. Default = 0.1 one-sided.
+#' @param alpha One-sided alpha value that is used for determining sample size n, if n is not specified. Default = 0.1.
 #' @param power Statistical power that is used for determining sample size if n is not specified. Default = 0.8.
-#' @param n The sample size of the trial. When it is not specified (=0), its value is estimated. Note: n represents the number of
+#' @param n The total sample size of the 2-arm trial. When it is not specified (=0), its value is estimated. Note: n represents the number of
 #'      events when treatment effect is in HR with time-to-event endpoint and the default mat = 1 is not altered.
 #' @param mat Data maturity rate of time-to-event endpoint. Default = 1
 #' @param sd The standard deviation specified for endpoints following a normal distribution. Default = 1
@@ -45,11 +45,10 @@
 #'
 #' @export
 
-futilityOC <- function (txtype = "norm", pow.type = "PREDICTIVE", p.stop = 0.15, ind = 1, epts.r=1, inF = 0.5, H1 = TV, TV = H1,
-	                      benef = NA, ctr.r = 0.5, NB.k = 0.5, over.dp = 1.5, alpha = 0.1, power = 0.8, n = 0, mat = 1, sd = 1,
+futilityOC <- function (txtype = "norm", pow.type = "PREDICTIVE", p.stop = 0.15, ind = 1, epts.r=1, inF = 0.5,
+                        H1 = TV, TV = H1, benef = NA, ctr.r = 0.5, NB.k = 0.5, over.dp = 1.5,
+                        alpha = 0.1, power = 0.8, n = 0, mat = 1, sd = 1,
 	                      LRV = "", delta = "", ran.r = 1, pr.tv = 0.1, pr.lrv = 0.8, print=T) {
-
-
 
   L.pr <- qnorm(c(pr.tv,pr.lrv))
   z.a <- qnorm(1-alpha)
@@ -232,14 +231,16 @@ futilityOC <- function (txtype = "norm", pow.type = "PREDICTIVE", p.stop = 0.15,
 	  cat(paste("Design.specifications:\n   H1 =", H1, ", alpha =", alpha, ", power =", round(power, 3), ", n =", n, ", inF =", inF,
 		        "\nGo.NoGo.parameters:\n   TV =", TV, ", LRV =", round(LRV, 2), ", pr.tv =", pr.tv, ", pr.lrv =", pr.lrv,
        ##	Specified.Futility.Criterion=cbind(Pr.stop.H1),
-		        "\nProb.stop.under.Hypotheses:\n   H0 =", round(Pr.false.stop[1],3), ", TV =", round(Pr.false.stop[2],3), ", LRV =", round(Pr.false.stop[3],3),
-            "\nFutility.stopping.boundary =", round(c.pw[1,1],3),
+       "\nFutility.stopping.boundary =", round(c.pw[1,1],3),
+		   "\nProb. of stopping at futility analysis under Hypotheses:\n   H0 =", round(Pr.false.stop[1],3), ", TV =", round(Pr.false.stop[2],3),
+                          ", LRV =", round(Pr.false.stop[3],3),
+
 		     #   "\nConditional.power.at.stopping.boundary:\n   Conditional Power =", round(c.pw[1,c(4)],3), ", Pr(Go|*) =", round(c.pw[1,c(3)],3),
          #              ", Pr(No Go|*) =", round(c.pw[1,c(2)],3),
 		        "\nPredictive.power.at.stopping.boundary:\n   Predictive Power =", round(p.pw[,c(3)],3), ", Pr(Go|*) =", round(p.pw[,c(2)],3),
 		                  ", Pr(No Go|*) =", round(p.pw[,c(1)],3),
        ##	Prob.of.termination.at.FA=Tab3[,c(1,3,2)],
-		        "\nCritical.values.for.Go.NoGo.based.on.Interim.data=\n   Go.Pause =", round(gng.F[1,c(2)],4), ", Pause.NoGo =", round(gng.F[1,c(1)],4)	))
+		        "\nCritical values for Go NoGo based on Interim data=\n   Go.Pause =", round(gng.F[1,c(2)],4), ", Pause.NoGo =", round(gng.F[1,c(1)],4)	))
 	}
        ##	Decision.prob.based.on.Interim.data=Tab0[,c(1,4,3,2)],
        ## Critical.values.for.Go.NoGo.based.on.Final.data=round(gng.c[1,c(2,1)],4),
