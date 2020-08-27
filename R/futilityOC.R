@@ -231,7 +231,7 @@ futilityOC <- function (txtype = "norm", pow.type = "PREDICTIVE", p.stop = 0.15,
 	  cat(paste("Design.specifications:\n   H1 =", H1, ", alpha =", alpha, ", power =", round(power, 3), ", n =", n, ", inF =", inF,
 		        "\nGo.NoGo.parameters:\n   TV =", TV, ", LRV =", round(LRV, 2), ", pr.tv =", pr.tv, ", pr.lrv =", pr.lrv,
        ##	Specified.Futility.Criterion=cbind(Pr.stop.H1),
-       "\nFutility.stopping.boundary =", round(c.pw[1,1],3),
+       "\nFutility.stopping.boundary =", round(tc0,3), # round(c.pw[1,1],3),
 		   "\nProb. of stopping at futility analysis under Hypotheses:\n   H0 =", round(Pr.false.stop[1],3), ", TV =", round(Pr.false.stop[2],3),
                           ", LRV =", round(Pr.false.stop[3],3),
 
@@ -249,7 +249,7 @@ futilityOC <- function (txtype = "norm", pow.type = "PREDICTIVE", p.stop = 0.15,
        ## Decision.prob.change.due.to.FA=Tab4[,c(1,4,3,2)],
        ## Potential.final.GNG.prob.by.FA.decision=round(Tab6,3),
        ## Go.prob.across.IA.and.Final.analyses=round(Tab5[,c(1,2,4,5,3)],3)	)
-	d.out <- data.frame(H1, alpha, power, n, inF, TV, LRV, pr.tv, pr.lrv, t(Pr.false.stop), stop.boundary = c.pw[1,1], #t(c.pw[1,c(4,3,2)]),
+	d.out <- data.frame(H1, alpha, power, n, inF, TV, LRV, pr.tv, pr.lrv, t(Pr.false.stop), stop.boundary = tc0, #t(c.pw[1,c(4,3,2)]),
 	                    t(p.pw[,c(3,2,1)])) #, t(gng.F[1,c(2,1)]))
 	names(d.out) <- c("H1", "alpha", "power", "n", "inF", "TV", "LRV", "pr.tv", "pr.lrv",
 	                  "pr.stop.if.H0", "pr.stop.if.TV", "pr.stop.if.LRV",
