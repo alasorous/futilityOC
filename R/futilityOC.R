@@ -43,6 +43,7 @@
 #'   ind = 1, inF = 0.5, TV = 0.2, # target difference
 #'   benef = T, ctr.r = 0.12, alpha = 0.025, n = 72)
 #'
+#' @export
 
 futilityOC <- function (txtype = "norm", pow.type = "PREDICTIVE", p.stop = 0.15, ind = 1, epts.r=1, inF = 0.5, H1 = TV, TV = H1,
 	                      benef = NA, ctr.r = 0.5, NB.k = 0.5, over.dp = 1.5, alpha = 0.1, power = 0.8, n = 0, mat = 1, sd = 1,
